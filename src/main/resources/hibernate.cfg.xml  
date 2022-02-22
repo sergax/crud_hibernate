@@ -9,10 +9,10 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost/user_db</property>
         <property name="hibernate.connection.username">info_user</property>
         <property name="hibernate.connection.password">user</property>
-        <mapping class="com/sergax/crudhibernate/model/Post"/>
-        <mapping class="com/sergax/crudhibernate/model/Poststatus"/>
-        <mapping class="com/sergax/crudhibernate/model/Tag"/>
-        <mapping class="com/sergax/crudhibernate/model/Writer"/>
 
+        <mapping class="com/sergax/crudhibernate/model/Tag"/>
+        <mapping class="com/sergax/crudhibernate/model/Post"/>
+        <mapping class="com/sergax/crudhibernate/model/PostStatus"/>
+        <mapping class="com/sergax/crudhibernate/model/Writer"/>
     </session-factory>
 </hibernate-configuration>

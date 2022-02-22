@@ -1,6 +1,6 @@
 package com.sergax.crudhibernate.model;
 
-public enum Poststatus {
+public enum PostStatus {
     ACTIVE,
     DELETE
 }

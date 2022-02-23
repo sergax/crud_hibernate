@@ -4,7 +4,6 @@ import com.sergax.crudhibernate.model.Post;
 import com.sergax.crudhibernate.repository.PostRepository;
 import com.sergax.crudhibernate.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.persistence.Query;
 import java.util.List;
@@ -14,7 +13,7 @@ public class PostRepoImpl implements PostRepository {
     public Post getById(Long id) {
         Post post = null;
 
-        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query query = session.createQuery("FROM post where id =:id");
             query.setParameter("id", id);
             List postList = query.getResultList();

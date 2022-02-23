@@ -4,24 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "writer")
 public class Writer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "writer_id")
     private Long writer_id;
+
+    @Column(name = "name")
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "post")
+    @JoinColumn(name = "post_id")
     private List<Post> postList;
 
     @Override
     public String toString() {
-        return "Writer{" +
-                "writer_id=" + writer_id +
-                ", name='" + name + '\'' +
-                ", postList=" + postList +
-                '}';
+        return "Writer : \n " +
+                "writer_id : " + writer_id + "\n" +
+                "name : " + name + "\n" +
+                "postList : " + postList;
     }
 }

@@ -21,7 +21,9 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "tag_post")
+    @JoinColumn(name = "post_id")
     private List<Tag> tagList;
 
     @Column(name = "status")
@@ -29,12 +31,11 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "post_id=" + post_id +
-                ", content='" + content + '\'' +
-                ", tagList=" + tagList +
-                ", poststatus=" + poststatus +
-                '}';
+        return "Post : \n" +
+                "post_id : " + post_id + "\n" +
+                "content : " + content + "\n" +
+                "tagList : " + tagList + "\n" +
+                "status : " + poststatus;
     }
 }
 

@@ -7,7 +7,7 @@ public interface GenericRepository<T, Id> {
 
     List<T> getAll();
 
-    void deleteById(Long id);
+    void deleteById(T t);
 
     T create(T t);
 

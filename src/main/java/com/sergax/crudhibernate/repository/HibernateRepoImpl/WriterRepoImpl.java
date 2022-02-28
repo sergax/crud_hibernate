@@ -17,7 +17,7 @@ public class WriterRepoImpl implements WriterRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Writer writer) {
 
     }
 

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,19 +14,26 @@ import javax.persistence.*;
 @Table(name = "tag")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
-    @JoinTable(name = "tag_post")
-    @JoinColumn(name = "tag_id")
     private Long tag_id;
 
     @Column(name = "name")
     private String name;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+            CascadeType.REFRESH})
+    @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> postList;
+
     @Override
     public String toString() {
-        return "Tag : \n" +
-                "tag_id :" + tag_id + "\n" +
-                "name :'" + name + "\n";
+        return "Tag :" +
+                " tag_id : " + tag_id + " |" +
+                " name : " + name + "\n";
     }
 }

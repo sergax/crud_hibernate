@@ -107,7 +107,7 @@ public class WriterView extends GeneralView {
     void delete() {
         System.out.println(deleteActionList);
         Long id = sc.nextLong();
-        writerController.deleteById(id);
+//        writerController.deleteById(id);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 

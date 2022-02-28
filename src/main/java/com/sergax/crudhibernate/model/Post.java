@@ -14,28 +14,33 @@ import java.util.List;
 @Table(name = "Post")
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long post_id;
 
     @Column(name = "content")
     private String content;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "tag_post")
-    @JoinColumn(name = "post_id")
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+            CascadeType.REFRESH})
+    @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tagList;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private PostStatus poststatus;
 
     @Override
     public String toString() {
-        return "Post : \n" +
-                "post_id : " + post_id + "\n" +
-                "content : " + content + "\n" +
-                "tagList : " + tagList + "\n" +
-                "status : " + poststatus;
+        return "Post : " +
+                " post_id : " + post_id + " |" +
+                " content : " + content + " |" +
+                " tagList : " + tagList + " |" +
+                " status : " + poststatus +"\n";
     }
 }
 

@@ -21,8 +21,8 @@ public class WriterServiceImpl implements WriterService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        writerRepository.deleteById(id);
+    public void deleteById(Writer writer) {
+        writerRepository.deleteById(writer);
     }
 
     @Override

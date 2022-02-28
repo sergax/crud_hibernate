@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PostView extends GeneralView{
+public class PostView extends GeneralView {
     private final PostController postController;
     private final TagController tagController;
     private PostStatus postStatus;
@@ -25,13 +25,13 @@ public class PostView extends GeneralView{
     }
 
     private final String actionList = """
-            Choose action by posts :\s
-            1. Create\s
-            2. Update\s
-            3. Delete\s
-            4. Get list\s
-            5. Exit\s
-            """;
+                                      Choose action by posts :\s
+                                      1. Create\s
+                                      2. Update\s
+                                      3. Delete\s
+                                      4. Get list\s
+                                      5. Exit\s
+                                      """;
 
     private final String createActionList = "Create post . \n" + Messages.CONTENT.getMessage();
     private final String updateActionList = "Update post . \n" + Messages.ID.getMessage();
@@ -60,10 +60,12 @@ public class PostView extends GeneralView{
         System.out.println(createActionList);
         sc = new Scanner(System.in);
         String content = sc.nextLine();
-        List<Tag> tagList = selectTags();
+        System.out.println(Messages.TAG.getMessage());
+        Long tag_id = sc.nextLong();
         PostStatus status = selectStatus();
         System.out.println(Messages.POST.getMessage());
-        postController.create(new Post(null, content, tagList, status));
+        Long post_id = sc.nextLong();
+        updatePost().setPost_id(post_id);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -77,8 +79,8 @@ public class PostView extends GeneralView{
     public void delete() {
         try {
             System.out.println(deleteActionList);
-            Long input = Long.valueOf(sc.next());
-            postController.deleteById(input);
+            Long id = sc.nextLong();
+            postController.deleteById(new Post(id, "", new ArrayList<>(), postStatus));
             System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -96,25 +98,11 @@ public class PostView extends GeneralView{
     private Post updatePost() {
         System.out.println(updateActionList);
         Long id = sc.nextLong();
-        Post post = postController.getById(id);
-        if (post != null) {
-            System.out.println(Messages.UPDATE_POST.getMessage());
-            Long response = sc.nextLong();
-            while (true) {
-                if (response == 1) {
-                    System.out.println(Messages.CONTENT.getMessage());
-                    sc = new Scanner(System.in);
-                    String content = sc.nextLine();
-                    post.setContent(content);
-                    break;
-                } else if (response == 2) {
-                    post.setPoststatus(selectStatus());
-                    break;
-                } else if (response == 3) {
-                    break;
-                }
-            }
-        }
+        System.out.println(Messages.CONTENT.getMessage());
+        String content = sc.next();
+        System.out.println(Messages.STATUS.getMessage());
+        PostStatus status = selectStatus();
+        Post post = postController.update(new Post(id, content, new ArrayList<>(), status));
         return post;
     }
 

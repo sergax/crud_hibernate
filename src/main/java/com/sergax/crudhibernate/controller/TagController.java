@@ -17,8 +17,8 @@ public class TagController {
         return tagService.getAll();
     }
 
-    public void deleteById(Long id) {
-        tagService.deleteById(id);
+    public void deleteById(Tag tag) {
+        tagService.deleteById(tag);
     }
 
     public Tag create(Tag tag) {

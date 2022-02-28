@@ -21,8 +21,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        tagRepository.deleteById(id);
+    public void deleteById(Tag tag) {
+        tagRepository.deleteById(tag);
     }
 
     @Override

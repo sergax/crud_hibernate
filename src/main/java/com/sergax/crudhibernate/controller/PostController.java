@@ -17,8 +17,8 @@ public class PostController {
         return postService.getAll();
     }
 
-    public void deleteById(Long id) {
-        postService.deleteById(id);
+    public void deleteById(Post post) {
+        postService.deleteById(post);
     }
 
     public Post create(Post post) {

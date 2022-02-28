@@ -1,12 +1,14 @@
 package com.sergax.crudhibernate.repository.HibernateRepoImpl;
 
 import com.sergax.crudhibernate.model.Tag;
+import com.sergax.crudhibernate.model.Writer;
 import com.sergax.crudhibernate.repository.TagRepository;
 import com.sergax.crudhibernate.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TagRepoImpl implements TagRepository {
@@ -31,23 +33,23 @@ public class TagRepoImpl implements TagRepository {
 
     @Override
     public List<Tag> getAll() {
-        List tagList = null;
+        List<Tag> tagList = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tagList = session.createQuery(TAG_ALL).getResultList();
+            tagList = session.createSQLQuery(TAG_ALL).addEntity(Tag.class).getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
         return tagList;
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Tag tag) {
         Transaction transaction = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.delete(getById(id));
+            session.delete(tag);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,6 +65,9 @@ public class TagRepoImpl implements TagRepository {
             session.persist(tag);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
         return tag;
@@ -77,6 +82,9 @@ public class TagRepoImpl implements TagRepository {
             session.update(tag);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
         return tag;

@@ -43,6 +43,3 @@ public class Post {
                 " status : " + poststatus +"\n";
     }
 }
-
-
-

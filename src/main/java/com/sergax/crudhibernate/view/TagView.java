@@ -55,7 +55,7 @@ public class TagView extends GeneralView{
         System.out.println(createActionList);
         sc = new Scanner(System.in);
         String name = sc.nextLine();
-        tagController.create(new Tag(null, name, new ArrayList<>()));
+        tagController.create(new Tag(null, name));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -66,7 +66,7 @@ public class TagView extends GeneralView{
         System.out.println(Messages.NAME.getMessage());
         sc = new Scanner(System.in);
         String name = sc.nextLine();
-        tagController.update(new Tag(id, name, new ArrayList<>()));
+        tagController.update(new Tag(id, name));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -75,7 +75,7 @@ public class TagView extends GeneralView{
         System.out.println(deleteActionList);
         Long id = sc.nextLong();
         // add method that will be remove object by "id"
-        tagController.deleteById(new Tag(id, "", new ArrayList<>()));
+        tagController.deleteById(new Tag(id, ""));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 

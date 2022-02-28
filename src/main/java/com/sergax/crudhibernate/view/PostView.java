@@ -5,6 +5,7 @@ import com.sergax.crudhibernate.controller.TagController;
 import com.sergax.crudhibernate.model.Post;
 import com.sergax.crudhibernate.model.PostStatus;
 import com.sergax.crudhibernate.model.Tag;
+import com.sergax.crudhibernate.repository.HibernateRepoImpl.TagRepoImpl;
 import com.sergax.crudhibernate.util.Messages;
 
 import java.util.ArrayList;
@@ -57,15 +58,17 @@ public class PostView extends GeneralView {
 
     @Override
     public void create() {
+        Post post = new Post();
         System.out.println(createActionList);
         sc = new Scanner(System.in);
         String content = sc.nextLine();
         System.out.println(Messages.TAG.getMessage());
         Long tag_id = sc.nextLong();
+        List<Tag> tagList = (List<Tag>) tagController.create(new Tag(tag_id,""));
         PostStatus status = selectStatus();
-        System.out.println(Messages.POST.getMessage());
-        Long post_id = sc.nextLong();
-        updatePost().setPost_id(post_id);
+        post.setContent(content);
+        post.setPoststatus(status);
+        postController.create(new Post(null, content, tagList, status));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 

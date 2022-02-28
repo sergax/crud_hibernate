@@ -25,10 +25,10 @@ public class Tag {
             CascadeType.PERSIST,
             CascadeType.MERGE,
             CascadeType.DETACH,
-            CascadeType.REFRESH})
-    @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private List<Post> postList;
+            CascadeType.REFRESH}, mappedBy = "tag")
+//    @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "tag_id"),
+//            inverseJoinColumns = @JoinColumn(name = "post_id"))
+//    private List<Post> postList;
 
     @Override
     public String toString() {

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TagRepoImpl implements TagRepository {
-    private final String TAG_BY_ID = "FROM tag WHERE id =: id";
-    private final String TAG_ALL = "SELECT * FROM tag";
+    private final String TAG_BY_ID = "FROM Tag WHERE id =: id";
+    private final String TAG_ALL = "FROM Tag";
 
     @Override
     public Tag getById(Long id) {
@@ -36,7 +36,8 @@ public class TagRepoImpl implements TagRepository {
         List<Tag> tagList = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tagList = session.createSQLQuery(TAG_ALL).addEntity(Tag.class).getResultList();
+//            tagList = session.createSQLQuery(TAG_ALL).addEntity(Tag.class).getResultList();
+            tagList = session.createQuery(TAG_ALL).getResultList();
         } catch (Exception e) {
             return null;
         }
@@ -59,7 +60,6 @@ public class TagRepoImpl implements TagRepository {
     @Override
     public Tag create(Tag tag) {
         Transaction transaction = null;
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(tag);

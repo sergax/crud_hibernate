@@ -21,13 +21,14 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.REFRESH})
     @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
+//    @OneToMany(mappedBy = "post")
     private List<Tag> tagList;
 
     @Column(name = "status")
@@ -40,6 +41,6 @@ public class Post {
                 " post_id : " + post_id + " |" +
                 " content : " + content + " |" +
                 " tagList : " + tagList + " |" +
-                " status : " + poststatus +"\n";
+                " status : " + poststatus + "\n";
     }
 }

@@ -11,22 +11,14 @@
         <property name="hibernate.connection.username">info_user</property>
         <property name="hibernate.connection.password">user</property>
 
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.connection.autocommit">true</property>
-        <property name="show_sql">true</property>
+<!--        <property name="hibernate.show_sql">true</property>-->
+<!--        <property name="hibernate.connection.autocommit">true</property>-->
+<!--        <property name="show_sql">true</property>-->
 
+        <mapping class="com.sergax.crudhibernate.model.TagPost"/>
         <mapping class="com.sergax.crudhibernate.model.Tag"/>
         <mapping class="com.sergax.crudhibernate.model.Post"/>
         <mapping class="com.sergax.crudhibernate.model.PostStatus"/>
         <mapping class="com.sergax.crudhibernate.model.Writer"/>
     </session-factory>
 </hibernate-configuration>
-
-<!--        hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect-->
-<!--        hibernate.connection.driver_class=org.postgresql.Driver-->
-<!--        hibernate.connection.url=jdbc:postgresql://localhost:5432/user_db-->
-<!--        hibernate.connection.username=info_user-->
-<!--        hibernate.connection.password=user-->
-<!--        hibernate.show_sql=true-->
-<!--        hibernate.format_sql=true-->
-<!--        hibernate.jdbc.batch_size=5-->

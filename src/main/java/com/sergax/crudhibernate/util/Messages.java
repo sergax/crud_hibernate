@@ -18,7 +18,8 @@ public enum Messages {
             1.Tags\s
             2.Posts\s
             3.Writers\s
-            4.Exit\s
+            4.Tags_Posts\s
+            5.Exit\s
             """),
     ERROR_INPUT("Wrong input, try again pleas"),
     SUCCESSFUL_OPERATION("Successful operation"),

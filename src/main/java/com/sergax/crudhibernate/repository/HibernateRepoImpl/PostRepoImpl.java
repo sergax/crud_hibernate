@@ -1,9 +1,6 @@
 package com.sergax.crudhibernate.repository.HibernateRepoImpl;
 
 import com.sergax.crudhibernate.model.Post;
-import com.sergax.crudhibernate.model.Tag;
-import com.sergax.crudhibernate.model.TagPost;
-import com.sergax.crudhibernate.model.Writer;
 import com.sergax.crudhibernate.repository.PostRepository;
 import com.sergax.crudhibernate.util.HibernateUtil;
 import org.hibernate.Session;
@@ -15,6 +12,8 @@ import java.util.List;
 
 public class PostRepoImpl implements PostRepository {
     private static final String POST_BY_ID = "FROM Post WHERE id =:id";
+    private static final String INSERT_INTO_TAG_POST = "INSERT INTO tag_post WHERE tag_id =: tag_id" +
+            "and post_id =: post_id";
     private static final String POST_ALL = "SELECT * FROM post " +
             "LEFT JOIN tag_post USING(post_id)" +
             "LEFT JOIN tag USING(tag_id)" +
@@ -62,7 +61,6 @@ public class PostRepoImpl implements PostRepository {
     @Override
     public Post create(Post post) {
         Transaction transaction = null;
-        TagPost tagPost = new TagPost();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(post);

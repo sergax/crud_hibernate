@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,8 +29,7 @@ public class Post {
             CascadeType.REFRESH})
     @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-//    @OneToMany(mappedBy = "post")
-    private List<Tag> tagList;
+    private Set<Tag> tagList;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

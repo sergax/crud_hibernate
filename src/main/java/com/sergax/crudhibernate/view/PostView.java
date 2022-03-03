@@ -5,11 +5,11 @@ import com.sergax.crudhibernate.controller.TagController;
 import com.sergax.crudhibernate.model.Post;
 import com.sergax.crudhibernate.model.PostStatus;
 import com.sergax.crudhibernate.model.Tag;
-import com.sergax.crudhibernate.model.TagPost;
-import com.sergax.crudhibernate.repository.HibernateRepoImpl.TagRepoImpl;
+import com.sergax.crudhibernate.repository.jdbcRepoImpl.JdbcTagPostRepoImpl;
 import com.sergax.crudhibernate.util.Messages;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -65,7 +65,8 @@ public class PostView extends GeneralView {
         String content = sc.nextLine();
         PostStatus status = selectStatus();
         post.setPoststatus(status);
-        postController.create(new Post(null, content, new ArrayList<>(), status));
+        postController.create(new Post(null, content, new HashSet<>(), status));
+        createTagPost();
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -80,7 +81,7 @@ public class PostView extends GeneralView {
         try {
             System.out.println(deleteActionList);
             Long id = sc.nextLong();
-            postController.deleteById(new Post(id, "", new ArrayList<>(), postStatus));
+            postController.deleteById(new Post(id, "", new HashSet<>(), postStatus));
             System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -102,7 +103,7 @@ public class PostView extends GeneralView {
         String content = sc.next();
         System.out.println(Messages.STATUS.getMessage());
         PostStatus status = selectStatus();
-        Post post = postController.update(new Post(id, content, new ArrayList<>(), status));
+        Post post = postController.update(new Post(id, content, new HashSet<>(), status));
         return post;
     }
 
@@ -135,5 +136,14 @@ public class PostView extends GeneralView {
             }
         }
         return postStatus;
+    }
+
+    private void createTagPost() {
+        JdbcTagPostRepoImpl jdbcTagPostRepo = new JdbcTagPostRepoImpl();
+        System.out.println(Messages.TAG.getMessage());
+        Long tagId = sc.nextLong();
+        System.out.println(Messages.POST.getMessage());
+        Long postId = sc.nextLong();
+        jdbcTagPostRepo.create(postId, tagId);
     }
 }

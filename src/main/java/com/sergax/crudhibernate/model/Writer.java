@@ -15,21 +15,20 @@ import java.util.List;
 public class Writer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "writer_id")
-    private Long writer_id;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "post")
-    @JoinColumn(name = "post_id")
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "writer")
     private List<Post> postList;
 
     @Override
     public String toString() {
         return "Writer : \n " +
-                " writer_id : " + writer_id + " |" +
+                " id : " + id + " |" +
                 " name : " + name + " |" +
                 " postList : " + postList + "\n";
     }

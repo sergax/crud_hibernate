@@ -6,9 +6,7 @@ import com.sergax.crudhibernate.model.Post;
 import com.sergax.crudhibernate.model.Writer;
 import com.sergax.crudhibernate.util.Messages;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class WriterView extends GeneralView {
     private final WriterController writerController;
@@ -56,11 +54,12 @@ public class WriterView extends GeneralView {
 
     @Override
     void create() {
+        Writer writer = new Writer();
         System.out.println(createActionList);
         sc = new Scanner(System.in);
         String name = sc.nextLine();
-        List<Post> posts = selectPostsList();
-        writerController.create(new Writer(null, name, posts));
+        writer.setName(name);
+        writerController.create(writer);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -98,7 +97,7 @@ public class WriterView extends GeneralView {
         System.out.println(Messages.POST.getMessage());
         Long input = sc.nextLong();
         if (input != 0) {
-            postList.add(postController.getById(input));
+            postList = (List<Post>) postController.getById(input);
         }
         return postList;
     }
@@ -107,7 +106,7 @@ public class WriterView extends GeneralView {
     void delete() {
         System.out.println(deleteActionList);
         Long id = sc.nextLong();
-//        writerController.deleteById(id);
+        writerController.deleteById(id);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -115,16 +114,5 @@ public class WriterView extends GeneralView {
     void print() {
         System.out.println(printActionList);
         System.out.println(writerController.getAll());
-    }
-
-    private List<Post> selectPostsList() {
-        System.out.println("Existing Posts : " + postController.getAll());
-        List<Post> postList = new ArrayList<>();
-        System.out.println(Messages.POST.getMessage());
-        Long id = sc.nextLong();
-        if (id != 0) {
-            postList.add(postController.getById(id));
-        }
-        return postList;
     }
 }

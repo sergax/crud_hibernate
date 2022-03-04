@@ -1,7 +1,6 @@
-package com.sergax.crudhibernate.repository.HibernateRepoImpl;
+package com.sergax.crudhibernate.repository.hibernateRepoImpl;
 
 import com.sergax.crudhibernate.model.Tag;
-import com.sergax.crudhibernate.model.Writer;
 import com.sergax.crudhibernate.repository.TagRepository;
 import com.sergax.crudhibernate.util.HibernateUtil;
 import org.hibernate.Session;
@@ -20,7 +19,6 @@ public class TagRepoImpl implements TagRepository {
         Tag tag = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // try to use ...= session.byId("tag")
             Query query = session.createQuery(TAG_BY_ID);
             query.setParameter("id", id);
             List tagList = query.getResultList();
@@ -32,11 +30,10 @@ public class TagRepoImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> getAll() {
+    public List getAll() {
         List<Tag> tagList = new ArrayList<>();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            tagList = session.createSQLQuery(TAG_ALL).addEntity(Tag.class).getResultList();
             tagList = session.createQuery(TAG_ALL).getResultList();
         } catch (Exception e) {
             return null;
@@ -45,30 +42,36 @@ public class TagRepoImpl implements TagRepository {
     }
 
     @Override
-    public void deleteById(Tag tag) {
+    public void deleteById(Long id) {
+        Tag tag = new Tag();
         Transaction transaction = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
+            tag.setTag_id(id);
             session.delete(tag);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
         }
     }
 
     @Override
     public Tag create(Tag tag) {
         Transaction transaction = null;
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(tag);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
         }
         return tag;
     }
@@ -82,10 +85,10 @@ public class TagRepoImpl implements TagRepository {
             session.update(tag);
             transaction.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
         }
         return tag;
     }

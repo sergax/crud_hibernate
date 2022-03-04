@@ -2,12 +2,9 @@ package com.sergax.crudhibernate.view;
 
 import com.sergax.crudhibernate.controller.TagController;
 import com.sergax.crudhibernate.model.Tag;
-import com.sergax.crudhibernate.repository.HibernateRepoImpl.TagRepoImpl;
 import com.sergax.crudhibernate.util.Messages;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 
 public class TagView extends GeneralView{
@@ -56,18 +53,18 @@ public class TagView extends GeneralView{
         System.out.println(createActionList);
         sc = new Scanner(System.in);
         String name = sc.nextLine();
-        tagController.create(new Tag(null, name, new HashSet<>()));
+        tagController.create(new Tag(null, name, new ArrayList<>()));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
     @Override
     public void edit() {
         System.out.println(updateActionList);
-        Long id = Long.parseLong(String.valueOf(sc.nextLong()));
+        Long id = sc.nextLong();
         System.out.println(Messages.NAME.getMessage());
         sc = new Scanner(System.in);
         String name = sc.nextLine();
-        tagController.update(new Tag(id, name, new HashSet<>()));
+        tagController.update(new Tag(id, name, new ArrayList<>()));
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -75,8 +72,7 @@ public class TagView extends GeneralView{
     public void delete() {
         System.out.println(deleteActionList);
         Long id = sc.nextLong();
-        // add method that will be remove object by "id"
-        tagController.deleteById(new Tag(id, "", new HashSet<>()));
+        tagController.deleteById(id);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 

@@ -2,7 +2,6 @@ package com.sergax.crudhibernate.view;
 
 import com.sergax.crudhibernate.util.Messages;
 
-import java.util.List;
 import java.util.Scanner;
 
 public abstract class GeneralView {

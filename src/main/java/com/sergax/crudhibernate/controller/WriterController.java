@@ -17,8 +17,8 @@ public class WriterController {
         return writerService.getAll();
     }
 
-    public void deleteById(Writer writer) {
-        writerService.deleteById(writer);
+    public void deleteById(Long id) {
+        writerService.deleteById(id);
     }
 
     public Writer create(Writer writer) {

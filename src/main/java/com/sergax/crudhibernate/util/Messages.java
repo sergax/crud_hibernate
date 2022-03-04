@@ -25,6 +25,7 @@ public enum Messages {
     ERROR_OPERATION("Error!!!"),
     TAG("Put your Tag ID : "),
     POST("Put your Post ID : "),
+    WRITER("Put your Writer ID : "),
     STATUS("Choose status : "),
     NAME("Put your name : "),
     ID("Put your ID : "),

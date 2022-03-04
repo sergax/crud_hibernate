@@ -22,14 +22,14 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.DETACH,
-            CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tagList;
+    private List<Tag> tagList;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "post_writer_id")
+    private Writer writer;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

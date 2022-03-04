@@ -1,7 +1,7 @@
 package com.sergax.crudhibernate.service.serviceImpl;
 
 import com.sergax.crudhibernate.model.Post;
-import com.sergax.crudhibernate.repository.HibernateRepoImpl.PostRepoImpl;
+import com.sergax.crudhibernate.repository.hibernateRepoImpl.PostRepoImpl;
 import com.sergax.crudhibernate.repository.PostRepository;
 import com.sergax.crudhibernate.service.PostService;
 
@@ -21,8 +21,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deleteById(Post post) {
-        postRepository.deleteById(post);
+    public void deleteById(Long id) {
+        postRepository.deleteById(id);
     }
 
     @Override

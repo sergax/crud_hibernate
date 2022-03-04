@@ -21,7 +21,7 @@ public class ConsoleRunner {
             WriterController writerController = new WriterController();
 
             tagView = new TagView(tagController, sc);
-            postView = new PostView(postController, tagController, sc);
+            postView = new PostView(postController, tagController, writerController, sc);
             writerView = new WriterView(writerController, postController, sc);
 
         } catch (Exception e) {

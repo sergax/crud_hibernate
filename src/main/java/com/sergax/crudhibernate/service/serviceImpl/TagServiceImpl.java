@@ -1,7 +1,7 @@
 package com.sergax.crudhibernate.service.serviceImpl;
 
 import com.sergax.crudhibernate.model.Tag;
-import com.sergax.crudhibernate.repository.HibernateRepoImpl.TagRepoImpl;
+import com.sergax.crudhibernate.repository.hibernateRepoImpl.TagRepoImpl;
 import com.sergax.crudhibernate.repository.TagRepository;
 import com.sergax.crudhibernate.service.TagService;
 
@@ -21,8 +21,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteById(Tag tag) {
-        tagRepository.deleteById(tag);
+    public void deleteById(Long id) {
+        tagRepository.deleteById(id);
     }
 
     @Override

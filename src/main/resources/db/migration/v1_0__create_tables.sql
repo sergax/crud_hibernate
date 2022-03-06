@@ -6,7 +6,8 @@ CREATE TABLE tag (
 CREATE TABLE post (
   post_id serial not null primary key,
   content varchar(255) DEFAULT NULL,
-  status varchar(255) NOT NULL
+  status varchar(255) NOT NULL,
+  CONSTRAINT fk_post_writer FOREIGN KEY (post_writer_id) REFERENCES writer(id)
 );
 
 CREATE TABLE tag_post (
@@ -19,6 +20,5 @@ CREATE TABLE tag_post (
 CREATE TABLE writer (
   id serial not null primary key,
   name varchar(255) DEFAULT NULL,
-  post_writer_id serial not null,
-  CONSTRAINT fk_post_writer FOREIGN KEY (post_writer_id) REFERENCES post(post_id)
+  post_writer_id serial not null
 );

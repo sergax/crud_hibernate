@@ -42,7 +42,7 @@ public class TagRepoImpl implements TagRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Tag tag = new Tag();
         Transaction transaction = null;
 
@@ -57,6 +57,7 @@ public class TagRepoImpl implements TagRepository {
                 transaction.rollback();
             }
         }
+        return false;
     }
 
     @Override

@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "tag")
 public class Tag {
@@ -26,6 +25,11 @@ public class Tag {
     @JoinTable(name = "tag_post", joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> postList;
+
+    public Tag(Long tag_id, String name) {
+        this.tag_id = tag_id;
+        this.name = name;
+    }
 
     @Override
     public String toString() {

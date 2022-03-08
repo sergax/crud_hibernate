@@ -55,7 +55,7 @@ public class PostRepoImpl implements PostRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Transaction transaction = null;
         Post post = new Post();
 
@@ -70,6 +70,7 @@ public class PostRepoImpl implements PostRepository {
                 transaction.rollback();
             }
         }
+        return false;
     }
 
     public void createPostList(Long postWriterId, Long postID) {

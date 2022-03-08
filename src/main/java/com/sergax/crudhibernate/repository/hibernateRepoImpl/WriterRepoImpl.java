@@ -44,7 +44,7 @@ public class WriterRepoImpl implements WriterRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         Transaction transaction = null;
         Writer writer = new Writer();
 
@@ -59,6 +59,7 @@ public class WriterRepoImpl implements WriterRepository {
                 transaction.rollback();
             }
         }
+        return false;
     }
 
     @Override

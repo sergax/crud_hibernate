@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Post")
 public class Post {
@@ -34,6 +33,12 @@ public class Post {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private PostStatus poststatus;
+
+    public Post(Long post_id, String content, PostStatus poststatus) {
+        this.post_id = post_id;
+        this.content = content;
+        this.poststatus = poststatus;
+    }
 
     @Override
     public String toString() {

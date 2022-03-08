@@ -8,7 +8,7 @@ public interface GenericService<T, Id> {
 
     List<T> getAll();
 
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 
     T create(T t);
 

@@ -112,7 +112,7 @@ public class PostView extends GeneralView {
         System.out.println(Messages.WRITER.getMessage());
         Long writerId = sc.nextLong();
         Writer listWriter = (Writer) writerController.getById(writerId);
-        Post post = postController.update(new Post(id, content, new ArrayList<>(), listWriter, status));
+        Post post = postController.update(new Post(id, content, status));
         return post;
     }
 

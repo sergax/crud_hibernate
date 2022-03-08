@@ -22,8 +22,9 @@ public class WriterServiceImpl implements WriterService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         writerRepository.deleteById(id);
+        return false;
     }
 
     @Override

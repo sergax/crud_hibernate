@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "writer")
 public class Writer {
@@ -24,6 +23,11 @@ public class Writer {
     @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "writer")
     private List<Post> postList;
+
+    public Writer(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public String toString() {

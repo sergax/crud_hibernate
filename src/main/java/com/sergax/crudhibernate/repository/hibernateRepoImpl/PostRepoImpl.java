@@ -115,7 +115,7 @@ public class PostRepoImpl implements PostRepository {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(post);
+            session.saveOrUpdate(post);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

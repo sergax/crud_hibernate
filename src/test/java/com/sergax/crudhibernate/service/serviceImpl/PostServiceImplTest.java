@@ -35,6 +35,7 @@ class PostServiceImplTest {
 
     @Mock
     private Post post;
+    private Post testPost = new Post(8L, "Content", PostStatus.ACTIVE);
 
     @BeforeEach
     void setUp() {
@@ -43,15 +44,23 @@ class PostServiceImplTest {
 
     @Test
     void getById() {
-        when(postRepo.getById(3L)).thenReturn(post);
+        when(postRepo.getById(8L)).thenReturn(post);
 
-        Post postTest = new Post(3L, "Content", PostStatus.ACTIVE);
-        assertEquals(postTest.getPost_id(), postService.getById(3L).getPost_id());
+        post = postService.getById(8L);
+        assertNotNull(post);
+        assertNotNull(post.getPost_id());
+        assertNotNull(post.getContent());
+        assertEquals(8L, testPost.getPost_id());
+        assertEquals("Content", testPost.getContent());
+        assertEquals(PostStatus.ACTIVE, testPost.getPoststatus());
+
+        assertEquals(testPost.getPost_id(), postService.getById(8L).getPost_id());
     }
 
     @Test
     void getAll() {
         when(postRepo.getAll()).thenReturn(postList);
+        assertNotNull(postList);
     }
 
     @Test
@@ -62,18 +71,33 @@ class PostServiceImplTest {
     @Test
     void create() {
         when(postRepo.create(any())).thenReturn(post);
-        when(post.getPost_id()).thenReturn(2L);
+        when(post.getPost_id()).thenReturn(8L);
 
-        Post postTest = new Post(2L, "Tag", PostStatus.ACTIVE);
-        assertEquals(postTest.getPost_id(), postRepo.create(post).getPost_id());
+        post = postService.create(testPost);
+        assertNotNull(post);
+        assertNotNull(post.getPost_id());
+        assertNotNull(post.getContent());
+        assertEquals(8L, testPost.getPost_id());
+        assertEquals("Content", testPost.getContent());
+        assertEquals(PostStatus.ACTIVE, testPost.getPoststatus());
+
+        assertEquals(testPost.getPost_id(), postService.create(post).getPost_id());
     }
 
     @Test
     void update() {
         when(postRepo.update(any())).thenReturn(post);
-        when(post.getPost_id()).thenReturn(2L);
+        when(post.getPost_id()).thenReturn(8L);
 
-        Post postTest = new Post(2L, "Tag", PostStatus.ACTIVE);
-        assertEquals(postTest.getPost_id(), postRepo.update(post).getPost_id());
+        Post updatedPost = new Post(post.getPost_id(), "Content_Updated", PostStatus.DELETE);
+        post = postService.update(updatedPost);
+        assertNotNull(post);
+        assertNotNull(post.getPost_id());
+        assertNotNull(post.getContent());
+        assertEquals(post.getPost_id(), updatedPost.getPost_id());
+        assertEquals(post.getContent(), updatedPost.getContent());
+        assertEquals(post.getPoststatus(), updatedPost.getPoststatus());
+
+        assertEquals(testPost.getPost_id(), postService.update(post).getPost_id());
     }
 }

@@ -68,7 +68,7 @@ public class WriterRepoImpl implements WriterRepository {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(writer);
+            session.saveOrUpdate(writer);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

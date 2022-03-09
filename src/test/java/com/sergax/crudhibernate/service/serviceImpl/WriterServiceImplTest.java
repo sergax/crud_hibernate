@@ -17,8 +17,8 @@ import org.mockito.quality.Strictness;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -35,6 +35,7 @@ class WriterServiceImplTest {
 
     @Mock
     private WriterRepository writerRepo;
+    private Writer writerTest = new Writer(3L, "Name");
 
     @Mock
     private Writer writer;
@@ -48,13 +49,20 @@ class WriterServiceImplTest {
     void getById() {
         when(writerRepo.getById(1L)).thenReturn(writer);
 
-        Writer writerTest = new Writer(1L, "Name");
-        assertEquals(writerTest.getId(), writerService.getById(1L).getId());
+        writer = writerService.getById(3L);
+        assertNotNull(writer);
+        assertNotNull(writer.getId());
+        assertNotNull(writer.getName());
+        assertEquals(3L, writerTest.getId());
+        assertEquals("Name", writerTest.getName());
+
+        assertEquals(writerTest.getId(), writerService.getById(3L).getId());
     }
 
     @Test
     void getAll() {
         when(writerRepo.getAll()).thenReturn(writerList);
+        assertNotNull(writerList);
     }
 
     @Test
@@ -65,18 +73,31 @@ class WriterServiceImplTest {
     @Test
     void create() {
         when(writerRepo.create(any())).thenReturn(writer);
-        when(writer.getId()).thenReturn(2L);
+        when(writer.getId()).thenReturn(1L);
 
-        Writer writerTest = new Writer(2L, "Tag");
-        assertEquals(writerTest.getId(), writerRepo.create(writer).getId());
+        writer = writerService.create(writerTest);
+        assertNotNull(writer);
+        assertNotNull(writer.getId());
+        assertNotNull(writer.getName());
+        assertEquals(3L, writerTest.getId());
+        assertEquals("Name", writerTest.getName());
+
+        assertEquals(writerTest.getId(), writerService.create(writer).getId());
     }
 
     @Test
     void update() {
         when(writerRepo.update(any())).thenReturn(writer);
-        when(writer.getId()).thenReturn(2L);
+        when(writer.getId()).thenReturn(3L);
 
-        Writer writerTest = new Writer(2L, "Tag");
-        assertEquals(writerTest.getId(), writerRepo.update(writer).getId());
+        Writer updatedWriter = new Writer(writer.getId(), "Name_Updated");
+        writer = writerService.update(updatedWriter);
+        assertNotNull(writer);
+        assertNotNull(writer.getId());
+        assertNotNull(writer.getName());
+        assertEquals(writer.getId(), updatedWriter.getId());
+        assertEquals(writer.getName(), updatedWriter.getName());
+
+        assertEquals(writerTest.getId(), writerService.update(writer).getId());
     }
 }

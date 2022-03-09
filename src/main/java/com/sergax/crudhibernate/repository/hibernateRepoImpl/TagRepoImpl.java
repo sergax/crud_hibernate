@@ -66,7 +66,7 @@ public class TagRepoImpl implements TagRepository {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(tag);
+            session.saveOrUpdate(tag);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

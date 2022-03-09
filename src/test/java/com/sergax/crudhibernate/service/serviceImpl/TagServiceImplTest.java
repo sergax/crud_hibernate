@@ -22,13 +22,14 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class TagServiceImplTest {
     @InjectMocks
-    private TagServiceImpl tagService = new TagServiceImpl();
+    private TagServiceImpl tagService;
 
     @Mock
     private TagRepoImpl tagRepo;
 
     @Mock
-    private Tag tag = new Tag();
+    private Tag tag;
+    private Tag tagTest = new Tag(10L, "NameTest");
 
     @Mock
     private List<Tag> tagList;
@@ -40,37 +41,57 @@ class TagServiceImplTest {
 
     @Test
     void getById() {
-        when(tagRepo.getById(2L)).thenReturn(tag);
+        when(tagRepo.getById(11L)).thenReturn(tag);
 
-        Tag tagTest = new Tag(2L, "Tag");
-        assertEquals(tagTest.getTag_id(), tagService.getById(2L).getTag_id());
+        tag = tagService.getById(10L);
+        assertNotNull(tag);
+        assertNotNull(tag.getTag_id());
+        assertNotNull(tag.getName());
+        assertEquals(10L, tagTest.getTag_id());
+        assertEquals("NameTest", tagTest.getName());
+
+        assertEquals(tagTest.getTag_id(), tagService.getById(10L).getTag_id());
     }
 
     @Test
     void getAll() {
         when(tagRepo.getAll()).thenReturn(tagList);
+        assertNotNull(tagList);
     }
 
     @Test
     void deleteById() {
-        when(tagRepo.deleteById(1L)).thenReturn(true);
+        when(tagRepo.deleteById(6L)).thenReturn(true);
     }
 
     @Test
     void create() {
         when(tagRepo.create(any())).thenReturn(tag);
-        when(tag.getTag_id()).thenReturn(2L);
+        when(tag.getTag_id()).thenReturn(11L);
 
-        Tag tagTest = new Tag(2L, "Tag");
-        assertEquals(tagTest.getTag_id(), tagRepo.create(tag).getTag_id());
+        tag = tagService.create(tagTest);
+        assertNotNull(tag);
+        assertNotNull(tag.getTag_id());
+        assertNotNull(tag.getName());
+        assertEquals(10L, tagTest.getTag_id());
+        assertEquals("NameTest", tagTest.getName());
+
+        assertEquals(tagTest.getTag_id(), tagService.create(tag).getTag_id());
     }
 
     @Test
     void update() {
         when(tagRepo.update(any())).thenReturn(tag);
-        when(tag.getTag_id()).thenReturn(1L);
+        when(tag.getTag_id()).thenReturn(10L);
 
-        Tag tagTest = new Tag(1L, "TagTest");
-        assertEquals(tagTest.getTag_id(), tagRepo.update(tag).getTag_id());
+        Tag updatedTag = new Tag(tag.getTag_id(), "Updated_Name");
+        tag = tagService.update(updatedTag);
+        assertNotNull(tag);
+        assertNotNull(tag.getTag_id());
+        assertNotNull(tag.getName());
+        assertEquals(tag.getName(), updatedTag.getName());
+        assertEquals(tag.getTag_id(), updatedTag.getTag_id());
+
+        assertEquals(tagTest.getTag_id(), tagService.update(tag).getTag_id());
     }
 }

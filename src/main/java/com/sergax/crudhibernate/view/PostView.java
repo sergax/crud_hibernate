@@ -72,7 +72,7 @@ public class PostView extends GeneralView {
         PostStatus status = selectStatus();
         post.setContent(content);
         post.setPoststatus(status);
-        postController.create(new Post(null, content, status));
+        postController.create(post);
         System.out.println(Messages.SUCCESSFUL_OPERATION.getMessage());
     }
 
@@ -109,9 +109,6 @@ public class PostView extends GeneralView {
         String content = sc.next();
         System.out.println(Messages.STATUS.getMessage());
         PostStatus status = selectStatus();
-//        System.out.println(Messages.WRITER.getMessage());
-//        Long writerId = sc.nextLong();
-//        Writer listWriter = (Writer) writerController.getById(writerId);
         Post post = postController.update(new Post(id, content, status));
         return post;
     }

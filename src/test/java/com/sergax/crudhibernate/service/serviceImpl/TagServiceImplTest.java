@@ -1,62 +1,76 @@
 package com.sergax.crudhibernate.service.serviceImpl;
 
 import com.sergax.crudhibernate.model.Tag;
+import com.sergax.crudhibernate.repository.hibernateRepoImpl.TagRepoImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class TagServiceImplTest {
-    private TagServiceImpl tagService;
+    @InjectMocks
+    private TagServiceImpl tagService = new TagServiceImpl();
+
+    @Mock
+    private TagRepoImpl tagRepo;
+
+    @Mock
+    private Tag tag = new Tag();
+
+    @Mock
     private List<Tag> tagList;
 
     @BeforeEach
     void setUp() {
-        this.tagService = mock(TagServiceImpl.class);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void getById() {
-        Tag tag = new Tag();
-        tag.setTag_id(2L);
-        tag.setName("Tag");
+        when(tagRepo.getById(2L)).thenReturn(tag);
 
-        when(tagService.getById(2L)).thenReturn(tag);
+        Tag tagTest = new Tag(2L, "Tag");
+        assertEquals(tagTest.getTag_id(), tagService.getById(2L).getTag_id());
     }
 
     @Test
     void getAll() {
-        when(tagService.getAll()).thenReturn(tagList);
+        when(tagRepo.getAll()).thenReturn(tagList);
     }
 
     @Test
     void deleteById() {
-        when(tagService.deleteById(1L)).thenReturn(true);
-        assertTrue(tagService.deleteById(1L));
+        when(tagRepo.deleteById(1L)).thenReturn(true);
     }
 
     @Test
     void create() {
-        Tag tag = new Tag();
-        tag.setTag_id(3L);
-        tag.setName("Tag");
+        when(tagRepo.create(any())).thenReturn(tag);
+        when(tag.getTag_id()).thenReturn(2L);
 
-        when(tagService.create(tag)).thenReturn(tag);
-        Tag tag1 = tagService.create(tag);
-        assertEquals(tagService.create(tag), tag1);
+        Tag tagTest = new Tag(2L, "Tag");
+        assertEquals(tagTest.getTag_id(), tagRepo.create(tag).getTag_id());
     }
 
     @Test
     void update() {
-        Tag tag = new Tag();
-        tag.setTag_id(5L);
-        tag.setName("Tag1");
+        when(tagRepo.update(any())).thenReturn(tag);
+        when(tag.getTag_id()).thenReturn(1L);
 
-        when(tagService.update(tag)).thenReturn(tag);
-        assertEquals(tagService.update(tag), tag);
+        Tag tagTest = new Tag(1L, "TagTest");
+        assertEquals(tagTest.getTag_id(), tagRepo.update(tag).getTag_id());
     }
 }
